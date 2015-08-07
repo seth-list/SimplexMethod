@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 #include "fraction.h"
 //---------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void fraction::set_num(int a)
  num = a;
 }
 //---------------------------------------------------------------------------
-fraction fraction::operator+(fraction const & a)//сложение дробей
+fraction fraction::operator+(fraction const & a)//СЃР»РѕР¶РµРЅРёРµ РґСЂРѕР±РµР№
 {
   int nd;
   fraction Sum;
@@ -91,7 +91,7 @@ fraction fraction::operator+(fraction const & a)//сложение дробей
 
 
 //---------------------------------------------------------------------------
-fraction fraction::operator-(fraction const & a)//вычитание дробей
+fraction fraction::operator-(fraction const & a)//РІС‹С‡РёС‚Р°РЅРёРµ РґСЂРѕР±РµР№
 {
 
   int nd;
@@ -119,7 +119,7 @@ fraction fraction::operator-(fraction const & a)//вычитание дробей
 
 
 //---------------------------------------------------------------------------
-fraction fraction::operator*(fraction const & a)//умножение дробей
+fraction fraction::operator*(fraction const & a)//СѓРјРЅРѕР¶РµРЅРёРµ РґСЂРѕР±РµР№
 {
 
   int nd;
@@ -146,7 +146,7 @@ fraction fraction::operator*(fraction const & a)//умножение дробей
 }
 
 //---------------------------------------------------------------------------
-fraction fraction::operator/(fraction const & a)//деление дробей
+fraction fraction::operator/(fraction const & a)//РґРµР»РµРЅРёРµ РґСЂРѕР±РµР№
 {
 
   int nd;
@@ -185,7 +185,7 @@ fraction & fraction::operator = (fraction const & a)
 
 
 //---------------------------------------------------------------------------
-int fraction::nod (int n, int d) const //нод
+int fraction::nod (int n, int d) const //РЅРѕРґ
 {
         if(n==0||d==0) return 1;
         int k1=abs(n);

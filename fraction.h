@@ -1,13 +1,13 @@
-#ifndef fractionH
+п»ї#ifndef fractionH
 #define fractionH
 
-class fraction//класс дробь
+class fraction//РєР»Р°СЃСЃ РґСЂРѕР±СЊ
 
 {
 
 public:
-long num; //числитель
-long den; //знаменатель
+long num; //С‡РёСЃР»РёС‚РµР»СЊ
+long den; //Р·РЅР°РјРµРЅР°С‚РµР»СЊ
 
 
 fraction(int=0, int=1);

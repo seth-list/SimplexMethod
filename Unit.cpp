@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+п»ї//---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
@@ -25,30 +25,30 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 
 
-int m=0, n=0;//размеры матрицы ограничений
-BOOL Doubl;  //дв задача
-BOOL Line;  //пр задача
-simplex s;   //элемент класса
-simplex li;   //пошаг режим пр задача
-simplex du;   //пошаг режим дв задача
-int minmax;   //минимум или максимум
-fraction* zz;  //массив для указания расщ переменных
+int m=0, n=0;//СЂР°Р·РјРµСЂС‹ РјР°С‚СЂРёС†С‹ РѕРіСЂР°РЅРёС‡РµРЅРёР№
+BOOL Doubl;  //РґРІ Р·Р°РґР°С‡Р°
+BOOL Line;  //РїСЂ Р·Р°РґР°С‡Р°
+simplex s;   //СЌР»РµРјРµРЅС‚ РєР»Р°СЃСЃР°
+simplex li;   //РїРѕС€Р°Рі СЂРµР¶РёРј РїСЂ Р·Р°РґР°С‡Р°
+simplex du;   //РїРѕС€Р°Рі СЂРµР¶РёРј РґРІ Р·Р°РґР°С‡Р°
+int minmax;   //РјРёРЅРёРјСѓРј РёР»Рё РјР°РєСЃРёРјСѓРј
+fraction* zz;  //РјР°СЃСЃРёРІ РґР»СЏ СѓРєР°Р·Р°РЅРёСЏ СЂР°СЃС‰ РїРµСЂРµРјРµРЅРЅС‹С…
 
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-   //очистка таблиц
+   //РѕС‡РёСЃС‚РєР° С‚Р°Р±Р»РёС†
    for(int i=0;i<StringGrid2->ColCount;i++)
    for(int j=0;j<StringGrid2->ColCount;j++)
    {
     StringGrid1->Cells[i][j]="";
     StringGrid2->Cells[i][j]="";
    }
-   //очистка ответов
+   //РѕС‡РёСЃС‚РєР° РѕС‚РІРµС‚РѕРІ
    Panel3->Caption="";
    Panel4->Caption="";
 
-    //убираем кнопки
+    //СѓР±РёСЂР°РµРј РєРЅРѕРїРєРё
     Button4->Visible=false;
     Button5->Visible=false;
     Button6->Visible=false;
@@ -56,7 +56,7 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
     N1->Enabled=false;
     N2->Enabled=false;
 
-    //установка числа переменных и ограничений
+    //СѓСЃС‚Р°РЅРѕРІРєР° С‡РёСЃР»Р° РїРµСЂРµРјРµРЅРЅС‹С… Рё РѕРіСЂР°РЅРёС‡РµРЅРёР№
     n = CSpinEdit1->Value+1;
     m = CSpinEdit2->Value+1;
     
@@ -76,7 +76,7 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
     if(zz!=NULL) delete[]zz;
     zz = new fraction[m-1];
 
-    //удаление старых элементов
+    //СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂС‹С… СЌР»РµРјРµРЅС‚РѕРІ
     for (int i = 0; i < m1; i++)
     for (int j = 0; j < n1; j++)
     delete Mass_edit[i][j];
@@ -92,7 +92,7 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
     delete Mass_ch[j];
 
     int sm=0;
-    //создание новых
+    //СЃРѕР·РґР°РЅРёРµ РЅРѕРІС‹С…
     for (int i = 0; i < m; i++)
     {
      for (int j = 0; j < n; j++)
@@ -134,7 +134,7 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
          Mass_label[i][j]->Visible = true;
          Mass_label[i][j]->Parent = Form1->GroupBox1;
         }
-    } // for (int i = 0; i < m; i++) заканчивается
+    } // for (int i = 0; i < m; i++) Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ
 
     for (int j = 0; j < m; j++)
     {
@@ -199,25 +199,25 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 {
 
   LockWindowUpdate(Form1->Handle);
-  //удаление массива edit
+  //СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР° edit
   for (int i = 0; i < m1; i++)
   for (int j = 0; j < n1; j++)
   if(Mass_edit[i][j]!=NULL)
   delete Mass_edit[i][j];
-  //удаление массива label
+  //СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР° label
   for (int i = 0; i < m1; i++)
   for (int j = 0; j < n1-1; j++)
   if(Mass_label[i][j]!=NULL)
   delete Mass_label[i][j];
-  //удаление массива combobox
+  //СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР° combobox
   for (int j = 0; j < m1; j++)
   delete Mass_cb[j];
-  //удаление массива checkbox
+  //СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР° checkbox
   for (int j = 0; j < n1-1; j++)
   delete Mass_ch[j];
-  //удаление memo
+  //СѓРґР°Р»РµРЅРёРµ memo
   delete Memo;
-  //удаление элемента класса
+  //СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РєР»Р°СЃСЃР°
   s.del_simplex();
   li.de_init(n1-1, m1-1);
   li.del_simplex();
@@ -225,7 +225,7 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
   du.de_init(m1-1, n1-1);
   du.del_simplex();
   LockWindowUpdate(NULL);
-  //удаление массива для расщепления переменных
+  //СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР° РґР»СЏ СЂР°СЃС‰РµРїР»РµРЅРёСЏ РїРµСЂРµРјРµРЅРЅС‹С…
   if(zz!=NULL)
   delete[]zz;
 }
@@ -236,7 +236,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
  Button6->Visible=false;
  Button7->Visible=false;
- //Проверка правильного ввода
+ //РџСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕРіРѕ РІРІРѕРґР°
  char Key;
  int l;
  for (int i = 0; i < m; i++)
@@ -249,16 +249,16 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
    if ((Key!='1')&&(Key!='2')&&(Key!='3')&&(Key!='4')&&(Key!='5')
    &&(Key!='6')&&(Key!='7')&&(Key!='8')&&(Key!='9')&&(Key!='0')
    &&(Key!='/')&&(Key!=',')&&(Key!='-'))
-   {MessageBox(0,"Ошибка ввода","",MB_ICONINFORMATION);return;}
+   {MessageBox(0,"РћС€РёР±РєР° РІРІРѕРґР°","",MB_ICONINFORMATION);return;}
   }
  }
- //проверка combobox
+ //РїСЂРѕРІРµСЂРєР° combobox
   if(Mass_cb[0]->Text!="MAX"&&Mass_cb[0]->Text!="MIN") Mass_cb[0]->Text="MAX";
   for (int i = 0; i < m-1; i++)
   if(Mass_cb[i+1]->Text!="<="&&Mass_cb[i+1]->Text!="="&&Mass_cb[i+1]->Text!=">=")
   Mass_cb[i+1]->Text="<=";
 
-  //удаление старой таблицы для дв задачи
+  //СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕР№ С‚Р°Р±Р»РёС†С‹ РґР»СЏ РґРІ Р·Р°РґР°С‡Рё
  if(CheckBox1->Checked==False)
  {
   for(int i=0;i<StringGrid2->ColCount;i++)
@@ -268,7 +268,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   Button5->Visible=false;
  }
 
- //удаление старой таблицы для пр задачи
+ //СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕР№ С‚Р°Р±Р»РёС†С‹ РґР»СЏ РїСЂ Р·Р°РґР°С‡Рё
  if(CheckBox2->Checked==False)
  {
   for(int i=0;i<StringGrid2->ColCount;i++)
@@ -279,9 +279,9 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  }
 
  if(CheckBox1->Checked==False&&CheckBox2->Checked==False)
- {MessageBox(0,"Выберите задачу для решения","",MB_ICONINFORMATION);return;}
+ {MessageBox(0,"Р’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°С‡Сѓ РґР»СЏ СЂРµС€РµРЅРёСЏ","",MB_ICONINFORMATION);return;}
 
- //если "прямая задача"
+ //РµСЃР»Рё "РїСЂСЏРјР°СЏ Р·Р°РґР°С‡Р°"
  if(Line==FALSE&&Doubl==FALSE)
  if(CheckBox2->Checked==True)
  {
@@ -291,7 +291,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  }
  else Line=FALSE;
 
- //если "двойств задача"
+ //РµСЃР»Рё "РґРІРѕР№СЃС‚РІ Р·Р°РґР°С‡Р°"
  int a;
  if(Doubl==FALSE&&Line==False)
  if(CheckBox1->Checked==True)
@@ -306,13 +306,13 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  if(CheckBox1->Checked==False&&CheckBox2->Checked==False)
  return;
 
- //установка меню и кнопок для сохранения //прямая задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РјРµРЅСЋ Рё РєРЅРѕРїРѕРє РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ //РїСЂСЏРјР°СЏ Р·Р°РґР°С‡Р°
  if(Line==TRUE)
  {
   N1->Enabled=true;
   Button4->Visible=true;
  }
-  //установка меню и кнопок для сохранения //двойств задача
+  //СѓСЃС‚Р°РЅРѕРІРєР° РјРµРЅСЋ Рё РєРЅРѕРїРѕРє РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ //РґРІРѕР№СЃС‚РІ Р·Р°РґР°С‡Р°
  if(Doubl==TRUE)
  {
   N2->Enabled=true;
@@ -320,59 +320,59 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  }
 
 
- //n - количество переменных +1
- //m - количество ограничений +1
+ //n - РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРјРµРЅРЅС‹С… +1
+ //m - РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРіСЂР°РЅРёС‡РµРЅРёР№ +1
 
 
 
- //минимум или максимум
- if(Line==TRUE||(Line==FALSE&&Doubl==True))//если есть прямая задача
- //или только двойственная
+ //РјРёРЅРёРјСѓРј РёР»Рё РјР°РєСЃРёРјСѓРј
+ if(Line==TRUE||(Line==FALSE&&Doubl==True))//РµСЃР»Рё РµСЃС‚СЊ РїСЂСЏРјР°СЏ Р·Р°РґР°С‡Р°
+ //РёР»Рё С‚РѕР»СЊРєРѕ РґРІРѕР№СЃС‚РІРµРЅРЅР°СЏ
  if(Mass_cb[0]->Text=="MAX")
  minmax=0;
  else minmax=1;
 
- //число переменных и ограничений меняется при переходе к дв задаче
+ //С‡РёСЃР»Рѕ РїРµСЂРµРјРµРЅРЅС‹С… Рё РѕРіСЂР°РЅРёС‡РµРЅРёР№ РјРµРЅСЏРµС‚СЃСЏ РїСЂРё РїРµСЂРµС…РѕРґРµ Рє РґРІ Р·Р°РґР°С‡Рµ
  if(Doubl==TRUE)
  {a = n; n = m; m = a;}
 
 
- //буфер для записи
+ //Р±СѓС„РµСЂ РґР»СЏ Р·Р°РїРёСЃРё
  AnsiString decs="";
 
 
 
- //установка элемента класса и удаление старого
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚Р° РєР»Р°СЃСЃР° Рё СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕРіРѕ
   s.del_simplex();
   s.nsimplex(n-1, m-1);
 
 
- //установка целевой функции пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  {
   for(int i = 0;i<n-1;i++)
   if(minmax==0)
   s.get_obj()[i]=get_fr(Mass_edit[0][i]->Text);
   else
-  s.get_obj()[i]=get_fr("-"+Mass_edit[0][i]->Text);//при мин меняется знак
+  s.get_obj()[i]=get_fr("-"+Mass_edit[0][i]->Text);//РїСЂРё РјРёРЅ РјРµРЅСЏРµС‚СЃСЏ Р·РЅР°Рє
  }
  
- //установка целевой функции обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
    for(int i = 0;i<n-1;i++)
-   if(zz[i].get_num()==2) //если был знак >=
+   if(zz[i].get_num()==2) //РµСЃР»Рё Р±С‹Р» Р·РЅР°Рє >=
    s.get_obj()[i]=get_fr(Mass_edit[i+1][m-1]->Text);
    else
    s.get_obj()[i]=get_fr("-"+Mass_edit[i+1][m-1]->Text);
  }
 
- //установка свободных членов пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЃРІРѕР±РѕРґРЅС‹С… С‡Р»РµРЅРѕРІ РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  for(int i = 0;i<m-1;i++)
  s.get_freed()[i]=get_fr(Mass_edit[i+1][n-1]->Text);
 
- //установка свободных членов дв задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЃРІРѕР±РѕРґРЅС‹С… С‡Р»РµРЅРѕРІ РґРІ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
   for(int i = 0;i<m-1;i++)
@@ -382,7 +382,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   s.get_freed()[i]=get_fr("-"+Mass_edit[0][i]->Text);
  }
 
- //установка нач значения цел функции пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РЅР°С‡ Р·РЅР°С‡РµРЅРёСЏ С†РµР» С„СѓРЅРєС†РёРё РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  {
   if(minmax==0)
@@ -391,7 +391,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   s.get_freed()[m-1]=get_fr(Mass_edit[0][n-1]->Text);
  }
  
- //установка нач значения цел функции обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РЅР°С‡ Р·РЅР°С‡РµРЅРёСЏ С†РµР» С„СѓРЅРєС†РёРё РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
   if(minmax==0)
@@ -403,9 +403,9 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 
   
- //установка знаков 
+ //СѓСЃС‚Р°РЅРѕРІРєР° Р·РЅР°РєРѕРІ 
  if(Line==true)
- for(int i = 0;i<m-1;i++) //цикл по числу ограничений
+ for(int i = 0;i<m-1;i++) //С†РёРєР» РїРѕ С‡РёСЃР»Сѓ РѕРіСЂР°РЅРёС‡РµРЅРёР№
  {
   if(Mass_cb[i+1]->Text=="<=")
   s.get_symb()[i].set_num(0);
@@ -418,7 +418,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
  fraction frac;
  if(Doubl==true)
- for(int i = 0;i<n-1;i++) //цикл по числу переменных
+ for(int i = 0;i<n-1;i++) //С†РёРєР» РїРѕ С‡РёСЃР»Сѓ РїРµСЂРµРјРµРЅРЅС‹С…
  {
   if(Mass_cb[i+1]->Text=="<=")
   frac.set_num(0);
@@ -429,7 +429,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   zz[i].set_num(frac.num);
  }
 
-  //установка для дв задачи знаков
+  //СѓСЃС‚Р°РЅРѕРІРєР° РґР»СЏ РґРІ Р·Р°РґР°С‡Рё Р·РЅР°РєРѕРІ
  if(Doubl==TRUE)
  for(int i = 0;i<m-1;i++)
  if(Mass_ch[i]->Checked==false)
@@ -437,13 +437,13 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  else
  s.get_symb()[i].set_num(2);
 
- //установка коэффициентов пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РїСЂ Р·Р°РґР°С‡Р°
  if(Line==true)
  for(int i=0;i<m-1;i++)
  for(int j=0;j<n-1;j++)
  s.get_res()[i][j]=get_fr(Mass_edit[i+1][j]->Text);
 
- //установка коэффициентов обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==true)
  for(int i=0;i<m-1;i++)
  for(int j=0;j<n-1;j++)
@@ -454,41 +454,41 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   s.get_res()[i][j]=get_fr(Mass_edit[j+1][i]->Text);
  }
 
- //установка какие переменные надо расщепить
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєР°РєРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ РЅР°РґРѕ СЂР°СЃС‰РµРїРёС‚СЊ
  if(Doubl==TRUE)
  for(int j=0;j<n-1;j++)
- s.get_dis()[j]=zz[j]; //при дв задаче проверка по предыдущей
+ s.get_dis()[j]=zz[j]; //РїСЂРё РґРІ Р·Р°РґР°С‡Рµ РїСЂРѕРІРµСЂРєР° РїРѕ РїСЂРµРґС‹РґСѓС‰РµР№
 
  if(Line==TRUE)
  for(int j=0;j<n-1;j++)
  if(Mass_ch[j]->Checked==false)
- s.get_dis()[j].set_num(1);   //в пр задаче проверка по checkbox
+ s.get_dis()[j].set_num(1);   //РІ РїСЂ Р·Р°РґР°С‡Рµ РїСЂРѕРІРµСЂРєР° РїРѕ checkbox
  
 
-  s.init(n-1, m-1);//получение первой таблицы
+  s.init(n-1, m-1);//РїРѕР»СѓС‡РµРЅРёРµ РїРµСЂРІРѕР№ С‚Р°Р±Р»РёС†С‹
 
-  //Memo для HTML
+  //Memo РґР»СЏ HTML
   Memo->Lines->Clear();
   Memo->Lines->Add( "<HTML>" );
 
   if(Line==True)
-  Memo->Lines->Add( "<HEAD><TITLE>Решение задачи линейного программирования</TITLE></HEAD>" );
+  Memo->Lines->Add( "<HEAD><TITLE>Р РµС€РµРЅРёРµ Р·Р°РґР°С‡Рё Р»РёРЅРµР№РЅРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ</TITLE></HEAD>" );
   if(Doubl==True)
-  Memo->Lines->Add( "<HEAD><TITLE>Решение двойственной задачи линейного программирования</TITLE></HEAD>" );
+  Memo->Lines->Add( "<HEAD><TITLE>Р РµС€РµРЅРёРµ РґРІРѕР№СЃС‚РІРµРЅРЅРѕР№ Р·Р°РґР°С‡Рё Р»РёРЅРµР№РЅРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ</TITLE></HEAD>" );
 
   Memo->Lines->Add( "<BODY>" );
 
-  //вывод в буфер
+  //РІС‹РІРѕРґ РІ Р±СѓС„РµСЂ
   decs=add_title(s);
   Memo->Lines->Add(decs);
 
 
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
   decs="";
 
   decs=add_table(s, m, n);
   Memo->Lines->Add(decs);
-  //таблица добавлена
+  //С‚Р°Р±Р»РёС†Р° РґРѕР±Р°РІР»РµРЅР°
 
   decs="";
 
@@ -500,37 +500,37 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  while(s.get_dif()==FALSE)
  {
 
-  n_it=s.calculation(n-1, m-1); //получение остальных таблиц
+  n_it=s.calculation(n-1, m-1); //РїРѕР»СѓС‡РµРЅРёРµ РѕСЃС‚Р°Р»СЊРЅС‹С… С‚Р°Р±Р»РёС†
 
 
-  if(s.get_not()!=0)break;   //если получена ошибка то break
+  if(s.get_not()!=0)break;   //РµСЃР»Рё РїРѕР»СѓС‡РµРЅР° РѕС€РёР±РєР° С‚Рѕ break
   
   if(s.get_isk()==TRUE)
-  decs+="<p>Переходим к исходной целевой функции.<p> ";
+  decs+="<p>РџРµСЂРµС…РѕРґРёРј Рє РёСЃС…РѕРґРЅРѕР№ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё.<p> ";
 
 
   if(s.get_isk()==FALSE)
   if(s.get_doub()==TRUE)
-  decs+="Используем двойственный симплекс-метод. ";
-  else decs+="Используем обычный симплекс-метод. ";
+  decs+="РСЃРїРѕР»СЊР·СѓРµРј РґРІРѕР№СЃС‚РІРµРЅРЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
+  else decs+="РСЃРїРѕР»СЊР·СѓРµРј РѕР±С‹С‡РЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
 
   if(s.get_next()!=0)
   if(s.get_isk()==FALSE)
   if(Line==TRUE)
   {
-   decs+="Вводим в базис X"+IntToStr(s.get_next())+", ";
-   decs+="выводим из базиса X"+IntToStr(s.get_prev())+"<p>";
+   decs+="Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ X"+IntToStr(s.get_next())+", ";
+   decs+="РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° X"+IntToStr(s.get_prev())+"<p>";
   }
 
   if(s.get_next()!=0)
   if(s.get_isk()==FALSE)
   if(Doubl==TRUE)
   {
-   decs+="Вводим в базис Y"+IntToStr(s.get_next())+", ";
-   decs+="выводим из базиса Y"+IntToStr(s.get_prev())+"<p>";
+   decs+="Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ Y"+IntToStr(s.get_next())+", ";
+   decs+="РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° Y"+IntToStr(s.get_prev())+"<p>";
   }
 
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
 
   decs+=add_table(s, m, n);
   Memo->Lines->Add(decs);
@@ -538,11 +538,11 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  }
 
 //
- //добавление оконч таблицы
+ //РґРѕР±Р°РІР»РµРЅРёРµ РѕРєРѕРЅС‡ С‚Р°Р±Р»РёС†С‹
  if(Line==True)
  {
-  StringGrid1->Cells[0][0]="БП";
-  StringGrid1->Cells[1][0]="СЧ";
+  StringGrid1->Cells[0][0]="Р‘Рџ";
+  StringGrid1->Cells[1][0]="РЎР§";
   StringGrid1->ColCount=1+n+s.get_k()+s.get_r()+s.get_l();
   for (int k = 1; k < n+s.get_k()+s.get_r()+s.get_l(); k++)
   StringGrid1->Cells[k+1][0]= "X"+IntToStr(k);
@@ -587,11 +587,11 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   }
  }
 
- if(Doubl==True) //оконч таблица для дв задачи
+ if(Doubl==True) //РѕРєРѕРЅС‡ С‚Р°Р±Р»РёС†Р° РґР»СЏ РґРІ Р·Р°РґР°С‡Рё
  {
 
-  StringGrid2->Cells[0][0]="БП";
-  StringGrid2->Cells[1][0]="СЧ";
+  StringGrid2->Cells[0][0]="Р‘Рџ";
+  StringGrid2->Cells[1][0]="РЎР§";
   StringGrid2->ColCount=1+n+s.get_k()+s.get_r()+s.get_l();
   for (int k = 1; k < n+s.get_k()+s.get_r()+s.get_l()+1; k++)
   StringGrid2->Cells[k+1][0]= "Y"+IntToStr(k);
@@ -651,7 +651,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   {
    x[i]=zero;
   }
-  //получение ответа
+  //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
   for(int i=0;i<m-1;i++)
   {
    j=s.get_base()[i];
@@ -659,7 +659,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
    j++;
   }
 
-  //возвращение переменной
+  //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
   l=0;
   fraction fr;
   for(int i=0;i<n-1;i++)
@@ -673,7 +673,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
   }
 
 
-  decs+=" Число итераций: "+IntToStr(n_it);
+  decs+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
  }
 
  Memo->Lines->Add(decs);
@@ -689,10 +689,10 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  Memo->Lines->Clear();
 
 
- if(Line==true)  Panel3->Caption="Ответ: ";
- if(Doubl==true) Panel4->Caption="Ответ: ";
+ if(Line==true)  Panel3->Caption="РћС‚РІРµС‚: ";
+ if(Doubl==true) Panel4->Caption="РћС‚РІРµС‚: ";
 
- //если целевая ф-ция оптимальна
+ //РµСЃР»Рё С†РµР»РµРІР°СЏ С„-С†РёСЏ РѕРїС‚РёРјР°Р»СЊРЅР°
  if(s.get_not()==0)
  {
   if(Line==true)
@@ -718,29 +718,29 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
  {
   if(s.get_not()!=0)
   {
-   Panel3->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(s.get_not());
+   Panel3->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(s.get_not());
    if(s.get_not()==1)
-   Panel3->Caption=Panel3->Caption+": В столбце над отриц. элементом нет положительных";
+   Panel3->Caption=Panel3->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
    if(s.get_not()==2)
-   Panel3->Caption=Panel3->Caption+": В строке справа от отриц. элемента нет отрицательных";
+   Panel3->Caption=Panel3->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
    if(s.get_not()==3)
-   Panel3->Caption=Panel3->Caption+": Искусственная целевая функция осталась отрицательна";
+   Panel3->Caption=Panel3->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
   }
  }
  
  if(Doubl==true)
  {
   if(s.get_not()!=0)
-  Panel4->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(s.get_not());
+  Panel4->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(s.get_not());
   if(s.get_not()==1)
-  Panel4->Caption=Panel4->Caption+": В столбце над отриц. элементом нет положительных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
   if(s.get_not()==2)
-  Panel4->Caption=Panel4->Caption+": В строке справа от отриц. элемента нет отрицательных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
   if(s.get_not()==3)
-  Panel4->Caption=Panel4->Caption+": Искусственная целевая функция осталась отрицательна";
+  Panel4->Caption=Panel4->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
  }
 
- //деинициализация массивов для итераций
+ //РґРµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°СЃСЃРёРІРѕРІ РґР»СЏ РёС‚РµСЂР°С†РёР№
  s.de_init(n-1, m-1);
 
 
@@ -756,7 +756,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
    Panel3->Caption = Panel3->Caption+" Y="+IntToStr(answ.get_num());
    if(answ.get_num()!=0&&answ.get_den()!=1)
    Panel3->Caption = Panel3->Caption+"/"+IntToStr(answ.get_den());
-   Panel3->Caption = Panel3->Caption+" Число итераций: "+IntToStr(n_it);
+   Panel3->Caption = Panel3->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
   }
   
    if(Doubl==true)
@@ -767,7 +767,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
    Panel4->Caption  = Panel4->Caption + " S="+IntToStr(answ.get_num());
    if(answ.get_num()!=0&&answ.get_den()!=1)
    Panel4->Caption = Panel4->Caption + "/"+IntToStr(answ.get_den());
-   Panel4->Caption = Panel4->Caption+" Число итераций: "+IntToStr(n_it);
+   Panel4->Caption = Panel4->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
   }
  }
  
@@ -775,7 +775,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
-//создание формы
+//СЃРѕР·РґР°РЅРёРµ С„РѕСЂРјС‹
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
 
@@ -801,7 +801,7 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 
 AnsiString Str="";
-//сохранение отчета 1
+//СЃРѕС…СЂР°РЅРµРЅРёРµ РѕС‚С‡РµС‚Р° 1
 void __fastcall TForm1::Button4Click(TObject *Sender)
 {
  if( SaveDialog1->Execute())
@@ -815,7 +815,7 @@ void __fastcall TForm1::Button4Click(TObject *Sender)
  }
 }
 //---------------------------------------------------------------------------
-//сохранение 2
+//СЃРѕС…СЂР°РЅРµРЅРёРµ 2
 void __fastcall TForm1::Button5Click(TObject *Sender)
 {
  if( SaveDialog2->Execute())
@@ -829,7 +829,7 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
  }
 }
 //---------------------------------------------------------------------------
-//ввод из строки в дробь
+//РІРІРѕРґ РёР· СЃС‚СЂРѕРєРё РІ РґСЂРѕР±СЊ
 fraction get_fr(AnsiString text)
 {
  fraction num;
@@ -865,14 +865,14 @@ fraction get_fr(AnsiString text)
  return num;
 }
 //---------------------------------------------------------------------------
-AnsiString add_title(simplex s) //добавление заголовка в буфер
+AnsiString add_title(simplex s) //РґРѕР±Р°РІР»РµРЅРёРµ Р·Р°РіРѕР»РѕРІРєР° РІ Р±СѓС„РµСЂ
 {
   AnsiString decs;
   decs="<meta http-equiv=\"Content-Type\" content=\"text/html;charset=windows-1251\">";
-  decs+="Решение задачи линейного программирования<p>Целевая функция:<p>";
+  decs+="Р РµС€РµРЅРёРµ Р·Р°РґР°С‡Рё Р»РёРЅРµР№РЅРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ<p>Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ:<p>";
 
 
-  //вывод целевой функции при max  и прямой задаче
+  //РІС‹РІРѕРґ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РїСЂРё max  Рё РїСЂСЏРјРѕР№ Р·Р°РґР°С‡Рµ
   if(Line==True)
   {decs+="Y=";
    if(minmax==0)
@@ -902,7 +902,7 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
    }
   }
   
-  //вывод целевой функции при обратной задаче
+  //РІС‹РІРѕРґ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РїСЂРё РѕР±СЂР°С‚РЅРѕР№ Р·Р°РґР°С‡Рµ
   if(Doubl==TRUE)
   {
    decs+="S=";
@@ -950,12 +950,12 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
    }
     if(minmax==0)
     {
-    decs+="Меняем знак целевой функции:<p>";
+    decs+="РњРµРЅСЏРµРј Р·РЅР°Рє С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё:<p>";
     decs+="S=";
     }
   }
 
-  //обмен знака
+  //РѕР±РјРµРЅ Р·РЅР°РєР°
   if(minmax==0&&Doubl==TRUE)
   {
    for(int i=0;i<n-1;i++)
@@ -1003,11 +1003,11 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
    if(i==n-2)
    decs+="->MIN<p>";
    }
-   decs+="Меняем знак целевой функции:<p>";
+   decs+="РњРµРЅСЏРµРј Р·РЅР°Рє С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё:<p>";
    decs+="Y=";
   }
 
-  //обмен знака
+  //РѕР±РјРµРЅ Р·РЅР°РєР°
   if(minmax==1&&Line==True)
   for(int i=0;i<n-1;i++)
   {
@@ -1031,8 +1031,8 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
    decs+="->MAX<p>";
   }
 
-  //вывод ограничений
-  decs+="При наличии ограничений:<p>";
+  //РІС‹РІРѕРґ РѕРіСЂР°РЅРёС‡РµРЅРёР№
+  decs+="РџСЂРё РЅР°Р»РёС‡РёРё РѕРіСЂР°РЅРёС‡РµРЅРёР№:<p>";
   for(int i=0;i<m-1;i++)
   {
    for(int j=0;j<n-1;j++)
@@ -1067,28 +1067,28 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
   }
 
 
-  if(s.get_k()!=0) //если доп переменные вводятся
+  if(s.get_k()!=0) //РµСЃР»Рё РґРѕРї РїРµСЂРµРјРµРЅРЅС‹Рµ РІРІРѕРґСЏС‚СЃСЏ
   {
-   decs+="<p><p>Приводим ограничения к канонической форме.<p>";
-   decs+="Для этого вводим дополняющие переменные: ";
+   decs+="<p><p>РџСЂРёРІРѕРґРёРј РѕРіСЂР°РЅРёС‡РµРЅРёСЏ Рє РєР°РЅРѕРЅРёС‡РµСЃРєРѕР№ С„РѕСЂРјРµ.<p>";
+   decs+="Р”Р»СЏ СЌС‚РѕРіРѕ РІРІРѕРґРёРј РґРѕРїРѕР»РЅСЏСЋС‰РёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ: ";
    for(int i=0;i<s.get_k();i++)
    {
-    if(Line==True) decs+="X";  //пр задача
-    if(Doubl==True) decs+="Y"; //обр задача
+    if(Line==True) decs+="X";  //РїСЂ Р·Р°РґР°С‡Р°
+    if(Doubl==True) decs+="Y"; //РѕР±СЂ Р·Р°РґР°С‡Р°
     decs+=IntToStr(n+i);
     if(i!=s.get_k()-1)
     decs+=", ";
    }
-   decs+=", чтобы избавиться от неравенств. <p>";
+   decs+=", С‡С‚РѕР±С‹ РёР·Р±Р°РІРёС‚СЊСЃСЏ РѕС‚ РЅРµСЂР°РІРµРЅСЃС‚РІ. <p>";
 
 
    } //if(s.get_k()!=0)
 
 
 
-   if(s.get_r()!=0) //если вводится иск переменная
+   if(s.get_r()!=0) //РµСЃР»Рё РІРІРѕРґРёС‚СЃСЏ РёСЃРє РїРµСЂРµРјРµРЅРЅР°СЏ
   {
-   decs+="Необходимо ввести искуственные переменные: ";
+   decs+="РќРµРѕР±С…РѕРґРёРјРѕ РІРІРµСЃС‚Рё РёСЃРєСѓСЃС‚РІРµРЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ: ";
    for(int i=0;i<s.get_r();i++)
    {
     if(Line==True)  decs+="X";
@@ -1101,19 +1101,19 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
 
    } //if(s.get_r()!=0)
 
-  if(s.get_l()!=0) //если расщ переменные вводятся
+  if(s.get_l()!=0) //РµСЃР»Рё СЂР°СЃС‰ РїРµСЂРµРјРµРЅРЅС‹Рµ РІРІРѕРґСЏС‚СЃСЏ
   {
    int e=0;
-   decs+="<p><p>Есть переменные, на которые наложено ограничение равенства.<p>";
+   decs+="<p><p>Р•СЃС‚СЊ РїРµСЂРµРјРµРЅРЅС‹Рµ, РЅР° РєРѕС‚РѕСЂС‹Рµ РЅР°Р»РѕР¶РµРЅРѕ РѕРіСЂР°РЅРёС‡РµРЅРёРµ СЂР°РІРµРЅСЃС‚РІР°.<p>";
    for(int i=0;i<n-1;i++)
    if(s.get_dis()[i].get_num()==1)
 
    {
-    decs+="Представляем переменную ";
+    decs+="РџСЂРµРґСЃС‚Р°РІР»СЏРµРј РїРµСЂРµРјРµРЅРЅСѓСЋ ";
     if(Line==True)  decs+="X";
     if(Doubl==True) decs+="Y";
     decs+=IntToStr(i+1);
-    decs+=" в виде: ";
+    decs+=" РІ РІРёРґРµ: ";
     if(Line==True)  decs+="X";
     if(Doubl==True) decs+="Y";
     decs+=IntToStr(i+1);
@@ -1127,9 +1127,9 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
    } //if(s.get_l()!=0
 
 
-   decs+="<p><p>Выразим базис в форме Таккера:<p>";
+   decs+="<p><p>Р’С‹СЂР°Р·РёРј Р±Р°Р·РёСЃ РІ С„РѕСЂРјРµ РўР°РєРєРµСЂР°:<p>";
    for(int i=0;i<m-1;i++)
-   for(int j=0;j<n-1+s.get_k()+s.get_r()+s.get_l();j++)   //по числу переменных
+   for(int j=0;j<n-1+s.get_k()+s.get_r()+s.get_l();j++)   //РїРѕ С‡РёСЃР»Сѓ РїРµСЂРµРјРµРЅРЅС‹С…
    {
 
      if(
@@ -1194,7 +1194,7 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
 
      if(s.get_r()==0)
      {
-      decs+="Целевая функция в форме Таккера: <p>";
+      decs+="Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РІ С„РѕСЂРјРµ РўР°РєРєРµСЂР°: <p>";
       if(Line==True)  decs+="Y=";
       if(Doubl==True) decs+="S=";
       decs+=IntToStr(s.get_nfreed()[m-1].get_num());
@@ -1204,16 +1204,16 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
      }
      else
      {
-      decs+="Искусственная целевая функция F в форме Таккера";
-      decs+="<p>сумма искусственных переменых и стремится к MIN <p>";
-      decs+="меняем знак целевой функции:<p>";
+      decs+="РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ F РІ С„РѕСЂРјРµ РўР°РєРєРµСЂР°";
+      decs+="<p>СЃСѓРјРјР° РёСЃРєСѓСЃСЃС‚РІРµРЅРЅС‹С… РїРµСЂРµРјРµРЅС‹С… Рё СЃС‚СЂРµРјРёС‚СЃСЏ Рє MIN <p>";
+      decs+="РјРµРЅСЏРµРј Р·РЅР°Рє С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё:<p>";
       decs+="F'="+IntToStr(s.get_nfreed()[m-1].get_num());
       if(s.get_nfreed()[m-1].get_num()!=0&&s.get_nfreed()[m-1].get_den()!=1)
       decs+="/"+IntToStr(s.get_nfreed()[m-1].get_den());
       decs+="-(";
      }
 
-   //целевая функция
+   //С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ
    for(int i=0;i<n-1+s.get_k()+s.get_r()+s.get_l();i++)
    {
     decs+=IntToStr(s.get_nobj()[i].get_num());
@@ -1226,7 +1226,7 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
     if(i!=n-2+s.get_k()+s.get_r()+s.get_l()&&(s.get_nobj()[i+1].get_num())>=0)
     decs+='+';
     if(i==n-2+s.get_k()+s.get_r()+s.get_l())
-    decs+=")->MАX<p>";
+    decs+=")->MРђX<p>";
    }
   //------------------------------------------------------------ 
   return decs;
@@ -1235,11 +1235,11 @@ AnsiString add_title(simplex s) //добавление заголовка в буфер
 AnsiString add_table(simplex s, int m, int n)
 {
   AnsiString decs;
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
   decs+= "<p><table border=2 cellpadding=4 ><tr bgcolor=\"#FFFFFF\">";
-  decs+= "<td align=\"center\">БП</td><td>СЧ</td>";
+  decs+= "<td align=\"center\">Р‘Рџ</td><td>РЎР§</td>";
 
-  //первая строка
+  //РїРµСЂРІР°СЏ СЃС‚СЂРѕРєР°
   for (int k = 1; k < n+s.get_k()+s.get_r()+s.get_l(); k++)
   {
    decs += "<td align=\"center\">";
@@ -1253,7 +1253,7 @@ AnsiString add_table(simplex s, int m, int n)
   decs += "</tr>";
   decs += "<tr>";
 
-   //остальные строки
+   //РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃС‚СЂРѕРєРё
    for (int i = 0; i < m; i++)
    {
    for (int j = 0; j < n+s.get_k()+s.get_r()+s.get_l()+1; j++)
@@ -1311,7 +1311,7 @@ AnsiString add_table(simplex s, int m, int n)
 
   }
   decs+="</table>";
-  //таблица добавлена
+  //С‚Р°Р±Р»РёС†Р° РґРѕР±Р°РІР»РµРЅР°
   return decs;
 }
 //---------------------------------------------------------------------------
@@ -1319,15 +1319,15 @@ AnsiString add_answer(simplex s)
 {
  AnsiString decs;
  fraction answ = s.get_answ();
- decs+="Ответ: ";
+ decs+="РћС‚РІРµС‚: ";
 
 
  fraction x[50];
  if(s.get_not()==0)
  {
-  decs+="Решение оптимально<p>";
+  decs+="Р РµС€РµРЅРёРµ РѕРїС‚РёРјР°Р»СЊРЅРѕ<p>";
   if((Doubl==TRUE&&minmax==0)||(Line==True&&minmax==1))
-  decs+="Возвращаем знак целевой функции:<p>";
+  decs+="Р’РѕР·РІСЂР°С‰Р°РµРј Р·РЅР°Рє С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё:<p>";
   if(Line==true)  decs+="Y=";
   if(Doubl==true) decs+="S=";
   if((Doubl==TRUE&&minmax==0)||(Line==True&&minmax==1))
@@ -1338,13 +1338,13 @@ AnsiString add_answer(simplex s)
   decs+="/"+IntToStr(answ.get_den());
   decs+="<p>";
 
-  //какие переменные возвращаются
+  //РєР°РєРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ РІРѕР·РІСЂР°С‰Р°СЋС‚СЃСЏ
   int l=0;
   for(int j=0;j<n-1;j++)
   {
     if(s.get_dis()[j].get_num()==1)
     {
-     decs+="Возвращаем переменную ";
+     decs+="Р’РѕР·РІСЂР°С‰Р°РµРј РїРµСЂРµРјРµРЅРЅСѓСЋ ";
      if(Line==True) decs+="X";
      if(Doubl==True) decs+="Y";
      decs+=IntToStr(j+1);
@@ -1370,7 +1370,7 @@ AnsiString add_answer(simplex s)
   {
    x[i]=zero;
   }
-  //получение ответа
+  //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
   for(int i=0;i<m-1;i++)
   {
    j=s.get_base()[i];
@@ -1378,7 +1378,7 @@ AnsiString add_answer(simplex s)
    j++;
   }
   
-  //возвращение переменной
+  //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
   l=0;
   fraction fr;
   for(int i=0;i<n-1;i++)
@@ -1410,17 +1410,17 @@ AnsiString add_answer(simplex s)
    decs+="/"+IntToStr(x[i].get_den())+"; ";
    else decs+="; ";
   }
-  //decs+=" Число итераций: "+IntToStr(n_it);
+  //decs+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
  }
  else
  {
-  decs+="Ответ: Целевая функция неограничена, причина №"+IntToStr(s.get_not());
+  decs+="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµРѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(s.get_not());
   if(s.get_not()==1)
-  decs+=": В столбце над отриц. элементом нет положительных";
+  decs+=": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
   if(s.get_not()==2)
-  decs+=": В строке справа от отриц. элемента нет отрицательных";
+  decs+=": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
   if(s.get_not()==3)
-  decs+=": Искусственная целевая функция осталась отрицательна";
+  decs+=": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
  }
 
  return decs;
@@ -1432,7 +1432,7 @@ void __fastcall TForm1::ExitClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-//добавление переменной при сохр ост
+//РґРѕР±Р°РІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ РїСЂРё СЃРѕС…СЂ РѕСЃС‚
 void __fastcall TForm1::N8Click(TObject *Sender)
 {
  TabSheet1->Show();
@@ -1456,7 +1456,7 @@ void __fastcall TForm1::N8Click(TObject *Sender)
   SpeedButton3->Enabled=false;}
 }
 //---------------------------------------------------------------------------
-//добавление ограничения при сохр ост
+//РґРѕР±Р°РІР»РµРЅРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РїСЂРё СЃРѕС…СЂ РѕСЃС‚
 void __fastcall TForm1::N9Click(TObject *Sender)
 {
  TabSheet1->Show();
@@ -1490,7 +1490,7 @@ void __fastcall TForm1::N5Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::N10Click(TObject *Sender)//открытие исх данных
+void __fastcall TForm1::N10Click(TObject *Sender)//РѕС‚РєСЂС‹С‚РёРµ РёСЃС… РґР°РЅРЅС‹С…
 {
  TabSheet1->Show();
  AnsiString FileN;
@@ -1523,7 +1523,7 @@ void __fastcall TForm1::N10Click(TObject *Sender)//открытие исх данных
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::N11Click(TObject *Sender)//сохранение исх данных
+void __fastcall TForm1::N11Click(TObject *Sender)//СЃРѕС…СЂР°РЅРµРЅРёРµ РёСЃС… РґР°РЅРЅС‹С…
 {
  TabSheet1->Show();
  AnsiString FileN;
@@ -1534,8 +1534,8 @@ void __fastcall TForm1::N11Click(TObject *Sender)//сохранение исх данных
  {
   FileN=SaveDialog3->FileName+".dat";
   fp=fopen(FileN.c_str(), "wb");
-  voider=m-1;fwrite(&voider, sizeof(int), 1, fp);  //кол-во ограничений
-  voider=n-1;fwrite(&voider, sizeof(int), 1, fp);  //кол-во переменных
+  voider=m-1;fwrite(&voider, sizeof(int), 1, fp);  //РєРѕР»-РІРѕ РѕРіСЂР°РЅРёС‡РµРЅРёР№
+  voider=n-1;fwrite(&voider, sizeof(int), 1, fp);  //РєРѕР»-РІРѕ РїРµСЂРµРјРµРЅРЅС‹С…
   for(int i=0;i<m;i++)
   for(int j=0;j<n;j++)
   {
@@ -1553,12 +1553,12 @@ void __fastcall TForm1::N11Click(TObject *Sender)//сохранение исх данных
  } 
 }
 //---------------------------------------------------------------------------
-//пошаговый ввод
+//РїРѕС€Р°РіРѕРІС‹Р№ РІРІРѕРґ
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
 
 
-  //Проверка правильного ввода
+  //РџСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕРіРѕ РІРІРѕРґР°
   char Key;
   int l;
   for (int i = 0; i < m; i++)
@@ -1571,17 +1571,17 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
     if ((Key!='1')&&(Key!='2')&&(Key!='3')&&(Key!='4')&&(Key!='5')
     &&(Key!='6')&&(Key!='7')&&(Key!='8')&&(Key!='9')&&(Key!='0')
     &&(Key!='/')&&(Key!=',')&&(Key!='-'))
-    {MessageBox(0,"Ошибка ввода","",MB_ICONINFORMATION);return;}
+    {MessageBox(0,"РћС€РёР±РєР° РІРІРѕРґР°","",MB_ICONINFORMATION);return;}
    }
   }
   
-  //проверка combobox
+  //РїСЂРѕРІРµСЂРєР° combobox
   if(Mass_cb[0]->Text!="MAX"&&Mass_cb[0]->Text!="MIN") Mass_cb[0]->Text="MAX";
   for (int i = 0; i < m-1; i++)
   if(Mass_cb[i+1]->Text!="<="&&Mass_cb[i+1]->Text!="="&&Mass_cb[i+1]->Text!=">=")
   Mass_cb[i+1]->Text="<=";
 
-  //удаление старой таблицы для дв задачи
+  //СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕР№ С‚Р°Р±Р»РёС†С‹ РґР»СЏ РґРІ Р·Р°РґР°С‡Рё
   if(CheckBox1->Checked==False)
   {
    for(int i=0;i<StringGrid2->ColCount;i++)
@@ -1591,7 +1591,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   }
 
 
- //удаление старой таблицы для пр задачи
+ //СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕР№ С‚Р°Р±Р»РёС†С‹ РґР»СЏ РїСЂ Р·Р°РґР°С‡Рё
  if(CheckBox2->Checked==False)
  {
   for(int i=0;i<StringGrid2->ColCount;i++)
@@ -1601,9 +1601,9 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  }
 
  if(CheckBox1->Checked==False&&CheckBox2->Checked==False)
- {MessageBox(0,"Выберите задачу для решения","",MB_ICONINFORMATION);return;}
+ {MessageBox(0,"Р’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°С‡Сѓ РґР»СЏ СЂРµС€РµРЅРёСЏ","",MB_ICONINFORMATION);return;}
 
- //если "прямая задача"
+ //РµСЃР»Рё "РїСЂСЏРјР°СЏ Р·Р°РґР°С‡Р°"
  if(Line==FALSE&&Doubl==FALSE)
  if(CheckBox2->Checked==True)
  {
@@ -1615,7 +1615,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  }
  else Line=FALSE;
 
- //если "двойств задача"
+ //РµСЃР»Рё "РґРІРѕР№СЃС‚РІ Р·Р°РґР°С‡Р°"
  int a;
  if(Doubl==FALSE&&Line==False)
  if(CheckBox1->Checked==True)
@@ -1635,22 +1635,22 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 
 
 
- //n - количество переменных +1
- //m - количество ограничений +1
+ //n - РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРјРµРЅРЅС‹С… +1
+ //m - РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРіСЂР°РЅРёС‡РµРЅРёР№ +1
 
- //минимум или максимум
- if(Line==TRUE||(Line==FALSE&&Doubl==True))//если есть прямая задача
- //или только двойственная
+ //РјРёРЅРёРјСѓРј РёР»Рё РјР°РєСЃРёРјСѓРј
+ if(Line==TRUE||(Line==FALSE&&Doubl==True))//РµСЃР»Рё РµСЃС‚СЊ РїСЂСЏРјР°СЏ Р·Р°РґР°С‡Р°
+ //РёР»Рё С‚РѕР»СЊРєРѕ РґРІРѕР№СЃС‚РІРµРЅРЅР°СЏ
  if(Mass_cb[0]->Text=="MAX")
  minmax=0;
  else minmax=1;
 
- //число переменных и ограничений меняется при переходе к дв задаче
+ //С‡РёСЃР»Рѕ РїРµСЂРµРјРµРЅРЅС‹С… Рё РѕРіСЂР°РЅРёС‡РµРЅРёР№ РјРµРЅСЏРµС‚СЃСЏ РїСЂРё РїРµСЂРµС…РѕРґРµ Рє РґРІ Р·Р°РґР°С‡Рµ
  if(Doubl==TRUE)
  {a = n; n = m; m = a;}
 
 
- //установка элемента класса и удаление старого
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚Р° РєР»Р°СЃСЃР° Рё СѓРґР°Р»РµРЅРёРµ СЃС‚Р°СЂРѕРіРѕ
  if(Line==TRUE)
  {
   li.del_simplex();
@@ -1664,32 +1664,32 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 
 
 
- //установка целевой функции пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  {
   for(int i = 0;i<n-1;i++)
   if(minmax==0)
   li.get_obj()[i]=get_fr(Mass_edit[0][i]->Text);
   else
-  li.get_obj()[i]=get_fr("-"+Mass_edit[0][i]->Text);//при мин меняется знак
+  li.get_obj()[i]=get_fr("-"+Mass_edit[0][i]->Text);//РїСЂРё РјРёРЅ РјРµРЅСЏРµС‚СЃСЏ Р·РЅР°Рє
  }
 
- //установка целевой функции обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
    for(int i = 0;i<n-1;i++)
-   if(zz[i].get_num()==2) //если был знак >=
+   if(zz[i].get_num()==2) //РµСЃР»Рё Р±С‹Р» Р·РЅР°Рє >=
    du.get_obj()[i]=get_fr(Mass_edit[i+1][m-1]->Text);
    else
    du.get_obj()[i]=get_fr("-"+Mass_edit[i+1][m-1]->Text);
  }
 
- //установка свободных членов пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЃРІРѕР±РѕРґРЅС‹С… С‡Р»РµРЅРѕРІ РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  for(int i = 0;i<m-1;i++)
  li.get_freed()[i]=get_fr(Mass_edit[i+1][n-1]->Text);
 
- //установка свободных членов дв задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° СЃРІРѕР±РѕРґРЅС‹С… С‡Р»РµРЅРѕРІ РґРІ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
   for(int i = 0;i<m-1;i++)
@@ -1699,7 +1699,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   du.get_freed()[i]=get_fr("-"+Mass_edit[0][i]->Text);
  }
 
- //установка нач значения цел функции пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РЅР°С‡ Р·РЅР°С‡РµРЅРёСЏ С†РµР» С„СѓРЅРєС†РёРё РїСЂ Р·Р°РґР°С‡Р°
  if(Line==True)
  {
   if(minmax==0)
@@ -1708,7 +1708,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   li.get_freed()[m-1]=get_fr(Mass_edit[0][n-1]->Text);
  }
 
- //установка нач значения цел функции обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РЅР°С‡ Р·РЅР°С‡РµРЅРёСЏ С†РµР» С„СѓРЅРєС†РёРё РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==True)
  {
   if(minmax==0)
@@ -1717,9 +1717,9 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   du.get_freed()[m-1]=get_fr("-"+Mass_edit[0][m-1]->Text);
  }
 
- //установка знаков
+ //СѓСЃС‚Р°РЅРѕРІРєР° Р·РЅР°РєРѕРІ
  if(Line==true)
- for(int i = 0;i<m-1;i++) //цикл по числу ограничений
+ for(int i = 0;i<m-1;i++) //С†РёРєР» РїРѕ С‡РёСЃР»Сѓ РѕРіСЂР°РЅРёС‡РµРЅРёР№
  {
   if(Mass_cb[i+1]->Text=="<=")
   li.get_symb()[i].set_num(0);
@@ -1732,7 +1732,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 
  fraction frac;
  if(Doubl==true)
- for(int i = 0;i<n-1;i++) //цикл по числу переменных
+ for(int i = 0;i<n-1;i++) //С†РёРєР» РїРѕ С‡РёСЃР»Сѓ РїРµСЂРµРјРµРЅРЅС‹С…
  {
   if(Mass_cb[i+1]->Text=="<=")
   frac.set_num(0);
@@ -1743,7 +1743,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   zz[i].set_num(frac.num);
  }
 
-  //установка для дв задачи знаков
+  //СѓСЃС‚Р°РЅРѕРІРєР° РґР»СЏ РґРІ Р·Р°РґР°С‡Рё Р·РЅР°РєРѕРІ
  if(Doubl==TRUE)
  for(int i = 0;i<m-1;i++)
  if(Mass_ch[i]->Checked==false)
@@ -1751,13 +1751,13 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  else
  du.get_symb()[i].set_num(2);
 
- //установка коэффициентов пр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РїСЂ Р·Р°РґР°С‡Р°
  if(Line==true)
  for(int i=0;i<m-1;i++)
  for(int j=0;j<n-1;j++)
  li.get_res()[i][j]=get_fr(Mass_edit[i+1][j]->Text);
 
- //установка коэффициентов обр задача
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РѕР±СЂ Р·Р°РґР°С‡Р°
  if(Doubl==true)
  for(int i=0;i<m-1;i++)
  for(int j=0;j<n-1;j++)
@@ -1769,28 +1769,28 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  }
 
  
- //установка какие переменные надо расщепить
+ //СѓСЃС‚Р°РЅРѕРІРєР° РєР°РєРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ РЅР°РґРѕ СЂР°СЃС‰РµРїРёС‚СЊ
  if(Doubl==TRUE)
  for(int j=0;j<n-1;j++)
- du.get_dis()[j]=zz[j]; //при дв задаче проверка по предыдущей
+ du.get_dis()[j]=zz[j]; //РїСЂРё РґРІ Р·Р°РґР°С‡Рµ РїСЂРѕРІРµСЂРєР° РїРѕ РїСЂРµРґС‹РґСѓС‰РµР№
 
 
  if(Line==TRUE)
  for(int j=0;j<n-1;j++)
  if(Mass_ch[j]->Checked==false)
- li.get_dis()[j].set_num(1);   //в пр задаче проверка по checkbox
+ li.get_dis()[j].set_num(1);   //РІ РїСЂ Р·Р°РґР°С‡Рµ РїСЂРѕРІРµСЂРєР° РїРѕ checkbox
 
 
-  if(Line==TRUE)  li.de_init(n-1, m-1);//удаление ст таблицы
-  if(Doubl==TRUE) du.de_init(n-1, m-1);//удаление ст таблицы
+  if(Line==TRUE)  li.de_init(n-1, m-1);//СѓРґР°Р»РµРЅРёРµ СЃС‚ С‚Р°Р±Р»РёС†С‹
+  if(Doubl==TRUE) du.de_init(n-1, m-1);//СѓРґР°Р»РµРЅРёРµ СЃС‚ С‚Р°Р±Р»РёС†С‹
 
   if(Line==TRUE)
-  li.init(n-1, m-1);//получение первой таблицы
+  li.init(n-1, m-1);//РїРѕР»СѓС‡РµРЅРёРµ РїРµСЂРІРѕР№ С‚Р°Р±Р»РёС†С‹
 
   if(Doubl==TRUE)
-  du.init(n-1, m-1);//получение первой таблицы
+  du.init(n-1, m-1);//РїРѕР»СѓС‡РµРЅРёРµ РїРµСЂРІРѕР№ С‚Р°Р±Р»РёС†С‹
 
-  //Memo для HTML
+  //Memo РґР»СЏ HTML
   Memo->Lines->Clear();
 
   if(Line==True)
@@ -1799,35 +1799,35 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   decs2="<HTML>";
 
   if(Line==True)
-  decs1+="<HEAD><TITLE>Решение задачи линейного программирования</TITLE></HEAD>";
+  decs1+="<HEAD><TITLE>Р РµС€РµРЅРёРµ Р·Р°РґР°С‡Рё Р»РёРЅРµР№РЅРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ</TITLE></HEAD>";
   if(Doubl==True)
-  decs2+="<HEAD><TITLE>Решение двойственной задачи линейного программирования</TITLE></HEAD>";
+  decs2+="<HEAD><TITLE>Р РµС€РµРЅРёРµ РґРІРѕР№СЃС‚РІРµРЅРЅРѕР№ Р·Р°РґР°С‡Рё Р»РёРЅРµР№РЅРѕРіРѕ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ</TITLE></HEAD>";
 
   if(Line==True)
   decs1+="<BODY>";
   if(Doubl==True)
   decs2+="<BODY>";
   
-  //вывод в буфер
+  //РІС‹РІРѕРґ РІ Р±СѓС„РµСЂ
   if(Line==TRUE)
   decs1+=add_title(li);
   if(Doubl==TRUE)
   decs2+=add_title(du);
 
 
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
   if(Line==TRUE)
   decs1+=add_table(li, m, n);
   if(Doubl==TRUE)
   decs2+=add_table(du, m, n);
-  //таблица добавлена
+  //С‚Р°Р±Р»РёС†Р° РґРѕР±Р°РІР»РµРЅР°
 
   
-  //вывод 1 табл в stringgrid
+  //РІС‹РІРѕРґ 1 С‚Р°Р±Р» РІ stringgrid
   if(Line==True)
   {
-   StringGrid1->Cells[0][0]="БП";
-   StringGrid1->Cells[1][0]="СЧ";
+   StringGrid1->Cells[0][0]="Р‘Рџ";
+   StringGrid1->Cells[1][0]="РЎР§";
    StringGrid1->ColCount=1+n+li.get_k()+li.get_r()+li.get_l();
    for (int k = 1; k < n+li.get_k()+li.get_r()+li.get_l(); k++)
    StringGrid1->Cells[k+1][0]= "X"+IntToStr(k);
@@ -1872,11 +1872,11 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
   }
  }
 
- if(Doubl==True) //нач таблица для дв задачи
+ if(Doubl==True) //РЅР°С‡ С‚Р°Р±Р»РёС†Р° РґР»СЏ РґРІ Р·Р°РґР°С‡Рё
  {
 
-  StringGrid2->Cells[0][0]="БП";
-  StringGrid2->Cells[1][0]="СЧ";
+  StringGrid2->Cells[0][0]="Р‘Рџ";
+  StringGrid2->Cells[1][0]="РЎР§";
   StringGrid2->ColCount=1+n+du.get_k()+du.get_r()+du.get_l();
   for (int k = 1; k < n+du.get_k()+du.get_r()+du.get_l()+1; k++)
   StringGrid2->Cells[k+1][0]= "Y"+IntToStr(k);
@@ -1923,7 +1923,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  fraction x[50];
 
  if(Line==True)
- if(li.get_dif()==TRUE)  //если для пр задачи ответ получен сразу
+ if(li.get_dif()==TRUE)  //РµСЃР»Рё РґР»СЏ РїСЂ Р·Р°РґР°С‡Рё РѕС‚РІРµС‚ РїРѕР»СѓС‡РµРЅ СЃСЂР°Р·Сѓ
  {
    Button4->Visible=true;
    N1->Enabled=true;
@@ -1940,7 +1940,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 
     for(int i=0;i<m-1+li.get_k();i++) x[i]=zero;
 
-    //получение ответа
+    //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
     for(int i=0;i<m-1;i++)
     {
      j=li.get_base()[i];
@@ -1949,14 +1949,14 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
     }
     
     l=0;
-    //возвращение переменной
+    //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
     for(int i=0;i<n-1;i++)
     if(li.get_dis()[i].get_num()==1)
     {
      x[i]=x[i]+x[n+l+li.get_k()-1].men(x[n+l+li.get_k()-1]);
      l++;
     }
-    decs1+=" Число итераций: "+IntToStr(0);
+    decs1+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(0);
    }
 
 
@@ -1969,9 +1969,9 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
    decs1="";
 
    
-   Panel3->Caption="Ответ: ";
+   Panel3->Caption="РћС‚РІРµС‚: ";
 
-  //если целевая ф-ция оптимальна
+  //РµСЃР»Рё С†РµР»РµРІР°СЏ С„-С†РёСЏ РѕРїС‚РёРјР°Р»СЊРЅР°
   if(li.get_not()==0)
   {
    if(Line==true)
@@ -1988,13 +1988,13 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
  {
   if(li.get_not()!=0)
   {
-   Panel3->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(li.get_not());
+   Panel3->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(li.get_not());
    if(li.get_not()==1)
-   Panel3->Caption=Panel3->Caption+": В столбце над отриц. элементом нет положительных";
+   Panel3->Caption=Panel3->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
    if(li.get_not()==2)
-   Panel3->Caption=Panel3->Caption+": В строке справа от отриц. элемента нет отрицательных";
+   Panel3->Caption=Panel3->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
    if(li.get_not()==3)
-   Panel3->Caption=Panel3->Caption+": Искусственная целевая функция осталась отрицательна";
+   Panel3->Caption=Panel3->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
   }
  }
 
@@ -2009,7 +2009,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
    Panel3->Caption = Panel3->Caption+" Y="+IntToStr(answ.get_num());
    if(answ.get_num()!=0&&answ.get_den()!=1)
    Panel3->Caption = Panel3->Caption+"/"+IntToStr(answ.get_den());
-   Panel3->Caption = Panel3->Caption+" Число итераций: "+IntToStr(0);
+   Panel3->Caption = Panel3->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(0);
   }
 
  }
@@ -2017,12 +2017,12 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 }
 else
 {
- Panel3->Caption="Исходная таблица";
+ Panel3->Caption="РСЃС…РѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р°";
  Button6->Visible=true;
 }
 
 if(Doubl==True)
-if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
+if(du.get_dif()==TRUE) //РµСЃР»Рё РѕС‚РІРµС‚ РґРІ Р·Р°РґР°С‡Рё РїРѕР»СѓС‡РµРЅ СЃСЂР°Р·Сѓ
 {
    Button5->Visible=true;
    N2->Enabled=true;
@@ -2040,7 +2040,7 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
     for(int i=0;i<m-1+du.get_k();i++)
     x[i]=zero;
 
-    //получение ответа
+    //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
     for(int i=0;i<m-1;i++)
     {
      j=du.get_base()[i];
@@ -2048,7 +2048,7 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
      j++;
     }
 
-    //возвращение переменной
+    //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
     l=0;
     for(int i=0;i<n-1;i++)
     if(du.get_dis()[i].get_num()==1)
@@ -2056,7 +2056,7 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
      x[i]=x[i]+x[n+l+du.get_k()-1].men(x[n+l+du.get_k()-1]);
      l++;
     } 
-    decs2+=" Число итераций: "+IntToStr(0);
+    decs2+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(0);
    }
 
 
@@ -2066,9 +2066,9 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
   Memo->Lines->Add(decs2);
   Memo->Lines->SaveToFile("Double_simplex.htm");
   decs2="";
-  Panel4->Caption="Ответ: ";
+  Panel4->Caption="РћС‚РІРµС‚: ";
 
- //если целевая ф-ция оптимальна
+ //РµСЃР»Рё С†РµР»РµРІР°СЏ С„-С†РёСЏ РѕРїС‚РёРјР°Р»СЊРЅР°
  if(du.get_not()==0)
  {
 
@@ -2086,13 +2086,13 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
  if(Doubl==true)
  {
   if(du.get_not()!=0)
-  Panel4->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(du.get_not());
+  Panel4->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(du.get_not());
   if(du.get_not()==1)
-  Panel4->Caption=Panel4->Caption+": В столбце над отриц. элементом нет положительных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
   if(du.get_not()==2)
-  Panel4->Caption=Panel4->Caption+": В строке справа от отриц. элемента нет отрицательных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
   if(du.get_not()==3)
-  Panel4->Caption=Panel4->Caption+": Искусственная целевая функция осталась отрицательна";
+  Panel4->Caption=Panel4->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
  }
 
 
@@ -2106,14 +2106,14 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
     Panel4->Caption  = Panel4->Caption + " S="+IntToStr(answ.get_num());
     if(answ.get_num()!=0&&answ.get_den()!=1)
     Panel4->Caption = Panel4->Caption + "/"+IntToStr(answ.get_den());
-    Panel4->Caption = Panel4->Caption+" Число итераций: "+IntToStr(0);
+    Panel4->Caption = Panel4->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(0);
    }
   }
 
  }
  else
  {
-  Panel4->Caption="Исходная таблица";
+  Panel4->Caption="РСЃС…РѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р°";
   Button7->Visible=true;
  }
 
@@ -2125,37 +2125,37 @@ if(du.get_dif()==TRUE) //если ответ дв задачи получен сразу
 void __fastcall TForm1::Button6Click(TObject *Sender)
 {
   int n_it;
-  n_it=li.calculation(n-1, m-1); //получение очеред итерации
+  n_it=li.calculation(n-1, m-1); //РїРѕР»СѓС‡РµРЅРёРµ РѕС‡РµСЂРµРґ РёС‚РµСЂР°С†РёРё
 
 
-  if(li.get_not()==0)   //если не получена ошибка
+  if(li.get_not()==0)   //РµСЃР»Рё РЅРµ РїРѕР»СѓС‡РµРЅР° РѕС€РёР±РєР°
   {
    if(li.get_isk()==TRUE)
-   decs1+="<p>Переходим к исходной целевой функции.<p> ";
+   decs1+="<p>РџРµСЂРµС…РѕРґРёРј Рє РёСЃС…РѕРґРЅРѕР№ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё.<p> ";
 
    if(li.get_isk()==FALSE)
    if(li.get_doub()==TRUE)
-   decs1+="Используем двойственный симплекс-метод. ";
-   else decs1+="Используем обычный симплекс-метод. ";
+   decs1+="РСЃРїРѕР»СЊР·СѓРµРј РґРІРѕР№СЃС‚РІРµРЅРЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
+   else decs1+="РСЃРїРѕР»СЊР·СѓРµРј РѕР±С‹С‡РЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
 
    if(li.get_next()!=0)
    if(li.get_isk()==FALSE)
    {
-    decs1+="Вводим в базис X"+IntToStr(li.get_next())+", ";
-    decs1+="выводим из базиса X"+IntToStr(li.get_prev())+"<p>";
+    decs1+="Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ X"+IntToStr(li.get_next())+", ";
+    decs1+="РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° X"+IntToStr(li.get_prev())+"<p>";
    }
 
 
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
   Line=TRUE;
   decs1+=add_table(li, m ,n);
   Line=FALSE;
  }
 
   
-  //новая таблица
-  StringGrid1->Cells[0][0]="БП";
-  StringGrid1->Cells[1][0]="СЧ";
+  //РЅРѕРІР°СЏ С‚Р°Р±Р»РёС†Р°
+  StringGrid1->Cells[0][0]="Р‘Рџ";
+  StringGrid1->Cells[1][0]="РЎР§";
   StringGrid1->ColCount=1+n+li.get_k()+li.get_r()+li.get_l();
   for (int k = 1; k < n+li.get_k()+li.get_r()+li.get_l(); k++)
   StringGrid1->Cells[k+1][0]= "X"+IntToStr(k);
@@ -2199,7 +2199,7 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
 
   fraction x[50];
 
-  if(li.get_dif()==TRUE)  //если для пр задачи получен ответ
+  if(li.get_dif()==TRUE)  //РµСЃР»Рё РґР»СЏ РїСЂ Р·Р°РґР°С‡Рё РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚
   {
    Button4->Visible=true;
    N1->Enabled=true;
@@ -2219,7 +2219,7 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
     for(int i=0;i<n-1+li.get_k();i++)
     x[i]=zero;
 
-    //получение ответа
+    //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
     for(int i=0;i<m-1;i++)
     {
      j=li.get_base()[i];
@@ -2228,7 +2228,7 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
     }
 
     int l=0;
-    //возвращение переменной
+    //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
     for(int i=0;i<n-1;i++)
     if(li.get_dis()[i].get_num()==1)
     {
@@ -2236,7 +2236,7 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
      l++;
     }
 
-    decs1+=" Число итераций: "+IntToStr(n_it);
+    decs1+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
    }
 
    decs1+="</BODY></HTML>";
@@ -2247,10 +2247,10 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
 
 
 
-  Panel3->Caption="Ответ: ";
+  Panel3->Caption="РћС‚РІРµС‚: ";
 
 
-  //если целевая ф-ция оптимальна
+  //РµСЃР»Рё С†РµР»РµРІР°СЏ С„-С†РёСЏ РѕРїС‚РёРјР°Р»СЊРЅР°
   if(li.get_not()==0)
   {
    for(int i=0;i<n-1+li.get_k();i++)
@@ -2263,13 +2263,13 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
   }
   else
   {
-    Panel3->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(li.get_not());
+    Panel3->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(li.get_not());
     if(li.get_not()==1)
-    Panel3->Caption=Panel3->Caption+": В столбце над отриц. элементом нет положительных";
+    Panel3->Caption=Panel3->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
     if(li.get_not()==2)
-    Panel3->Caption=Panel3->Caption+": В строке справа от отриц. элемента нет отрицательных";
+    Panel3->Caption=Panel3->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
     if(li.get_not()==3)
-    Panel3->Caption=Panel3->Caption+": Искусственная целевая функция осталась отрицательна";
+    Panel3->Caption=Panel3->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
   }
 
 
@@ -2282,7 +2282,7 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
     Panel3->Caption = Panel3->Caption+" Y="+IntToStr(answ.get_num());
     if(answ.get_num()!=0&&answ.get_den()!=1)
     Panel3->Caption = Panel3->Caption+"/"+IntToStr(answ.get_den());
-    Panel3->Caption = Panel3->Caption+" Число итераций: "+IntToStr(n_it);
+    Panel3->Caption = Panel3->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
    }
 
   }
@@ -2290,11 +2290,11 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
  }
  else
  {
-  Panel3->Caption="Итерация №"+IntToStr(n_it);
+  Panel3->Caption="РС‚РµСЂР°С†РёСЏ в„–"+IntToStr(n_it);
   if(li.get_next()!=0)
   if(li.get_isk()==FALSE)
-  Panel3->Caption=Panel3->Caption+" Вводим в базис X"+
-  IntToStr(li.get_next())+", выводим из базиса X"+IntToStr(li.get_prev());
+  Panel3->Caption=Panel3->Caption+" Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ X"+
+  IntToStr(li.get_next())+", РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° X"+IntToStr(li.get_prev());
  }
 }
 //---------------------------------------------------------------------------
@@ -2302,36 +2302,36 @@ void __fastcall TForm1::Button6Click(TObject *Sender)
 void __fastcall TForm1::Button7Click(TObject *Sender)
 {
   int n_it;
-  n_it=du.calculation(m-1, n-1); //получение оч итерации для дв задачи
+  n_it=du.calculation(m-1, n-1); //РїРѕР»СѓС‡РµРЅРёРµ РѕС‡ РёС‚РµСЂР°С†РёРё РґР»СЏ РґРІ Р·Р°РґР°С‡Рё
 
 
-  if(du.get_not()==0)  //если не получена ошибка
+  if(du.get_not()==0)  //РµСЃР»Рё РЅРµ РїРѕР»СѓС‡РµРЅР° РѕС€РёР±РєР°
   {
    if(du.get_isk()==TRUE)
-   decs2+="<p>Переходим к исходной целевой функции.<p> ";
+   decs2+="<p>РџРµСЂРµС…РѕРґРёРј Рє РёСЃС…РѕРґРЅРѕР№ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё.<p> ";
 
    if(du.get_isk()==FALSE)
    if(du.get_doub()==TRUE)
-   decs2+="Используем двойственный симплекс-метод. ";
-   else decs2+="Используем обычный симплекс-метод. ";
+   decs2+="РСЃРїРѕР»СЊР·СѓРµРј РґРІРѕР№СЃС‚РІРµРЅРЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
+   else decs2+="РСЃРїРѕР»СЊР·СѓРµРј РѕР±С‹С‡РЅС‹Р№ СЃРёРјРїР»РµРєСЃ-РјРµС‚РѕРґ. ";
 
 
    if(du.get_next()!=0)
    if(du.get_isk()==FALSE)
    {
-    decs2+="Вводим в базис Y"+IntToStr(du.get_next())+", ";
-    decs2+="выводим из базиса Y"+IntToStr(du.get_prev())+"<p>";
+    decs2+="Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ Y"+IntToStr(du.get_next())+", ";
+    decs2+="РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° Y"+IntToStr(du.get_prev())+"<p>";
    }
 
-  //добавление таблицы
+  //РґРѕР±Р°РІР»РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
   Doubl=TRUE;
   decs2+=add_table(du, n, m);
   Doubl=FALSE;
 
  }
 
-  StringGrid2->Cells[0][0]="БП";
-  StringGrid2->Cells[1][0]="СЧ";
+  StringGrid2->Cells[0][0]="Р‘Рџ";
+  StringGrid2->Cells[1][0]="РЎР§";
   StringGrid2->ColCount=1+m+du.get_k()+du.get_r()+du.get_l();
   for (int k = 1; k < m+du.get_k()+du.get_r()+du.get_l()+1; k++)
   StringGrid2->Cells[k+1][0]= "Y"+IntToStr(k);
@@ -2377,7 +2377,7 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
 
   fraction x[50];
 
-  if(du.get_dif()==TRUE) //если для дв задачи получен ответ
+  if(du.get_dif()==TRUE) //РµСЃР»Рё РґР»СЏ РґРІ Р·Р°РґР°С‡Рё РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚
   {
     Button5->Visible=true;
     N2->Enabled=true;
@@ -2396,7 +2396,7 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
     for(int i=0;i<m-1+du.get_k();i++)
     x[i]=zero;
 
-    //получение ответа
+    //РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
     for(int i=0;i<n-1;i++)
     {
      j=du.get_base()[i];
@@ -2405,14 +2405,14 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
     }
 
     int l=0;
-    //возвращение переменной
+    //РІРѕР·РІСЂР°С‰РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№
     for(int i=0;i<m-1;i++)
     if(du.get_dis()[i].get_num()==1)
     {
      x[i]=x[i]+x[m+l+du.get_k()-1].men(x[m+l+du.get_k()-1]);
      l++;
     }
-    decs2+=" Число итераций: "+IntToStr(n_it);
+    decs2+=" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
    }
 
 
@@ -2422,9 +2422,9 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
   Memo->Lines->SaveToFile("Double_simplex.htm");
   decs2="";
 
- Panel4->Caption="Ответ: ";
+ Panel4->Caption="РћС‚РІРµС‚: ";
 
- //если целевая ф-ция оптимальна
+ //РµСЃР»Рё С†РµР»РµРІР°СЏ С„-С†РёСЏ РѕРїС‚РёРјР°Р»СЊРЅР°
  if(du.get_not()==0)
  {
 
@@ -2440,13 +2440,13 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
 
  {
   if(du.get_not()!=0)
-  Panel4->Caption="Ответ: Целевая функция не ограничена, причина №"+IntToStr(du.get_not());
+  Panel4->Caption="РћС‚РІРµС‚: Р¦РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РЅРµ РѕРіСЂР°РЅРёС‡РµРЅР°, РїСЂРёС‡РёРЅР° в„–"+IntToStr(du.get_not());
   if(du.get_not()==1)
-  Panel4->Caption=Panel4->Caption+": В столбце над отриц. элементом нет положительных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚РѕР»Р±С†Рµ РЅР°Рґ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚РѕРј РЅРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹С…";
   if(du.get_not()==2)
-  Panel4->Caption=Panel4->Caption+": В строке справа от отриц. элемента нет отрицательных";
+  Panel4->Caption=Panel4->Caption+": Р’ СЃС‚СЂРѕРєРµ СЃРїСЂР°РІР° РѕС‚ РѕС‚СЂРёС†. СЌР»РµРјРµРЅС‚Р° РЅРµС‚ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С…";
   if(du.get_not()==3)
-  Panel4->Caption=Panel4->Caption+": Искусственная целевая функция осталась отрицательна";
+  Panel4->Caption=Panel4->Caption+": РСЃРєСѓСЃСЃС‚РІРµРЅРЅР°СЏ С†РµР»РµРІР°СЏ С„СѓРЅРєС†РёСЏ РѕСЃС‚Р°Р»Р°СЃСЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°";
  }
 
                           
@@ -2459,18 +2459,18 @@ void __fastcall TForm1::Button7Click(TObject *Sender)
     Panel4->Caption  = Panel4->Caption + " S="+IntToStr(answ.get_num());
     if(answ.get_num()!=0&&answ.get_den()!=1)
     Panel4->Caption = Panel4->Caption + "/"+IntToStr(answ.get_den());
-    Panel4->Caption = Panel4->Caption+" Число итераций: "+IntToStr(n_it);
+    Panel4->Caption = Panel4->Caption+" Р§РёСЃР»Рѕ РёС‚РµСЂР°С†РёР№: "+IntToStr(n_it);
    }
   }
   Button7->Visible=false;
  }
  else
  {
-  Panel4->Caption="Итерация №"+IntToStr(n_it);
+  Panel4->Caption="РС‚РµСЂР°С†РёСЏ в„–"+IntToStr(n_it);
   if(du.get_next()!=0)
   if(du.get_isk()==FALSE)
-  Panel4->Caption=Panel4->Caption+" Вводим в базис Y"+
-  IntToStr(du.get_next())+", выводим из базиса Y"+IntToStr(du.get_prev());
+  Panel4->Caption=Panel4->Caption+" Р’РІРѕРґРёРј РІ Р±Р°Р·РёСЃ Y"+
+  IntToStr(du.get_next())+", РІС‹РІРѕРґРёРј РёР· Р±Р°Р·РёСЃР° Y"+IntToStr(du.get_prev());
  }
 }
 //---------------------------------------------------------------------------
